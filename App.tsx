@@ -17,6 +17,7 @@ import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import SignUpStep1 from "./pages/SignUpStep1";
 import SignUpStep2 from "./pages/SignUpStep2";
+import Network from "./pages/Network";
 
 (Text as any).defaultProps = (Text as any).defaultProps || {};
 (Text as any).defaultProps.style = { fontFamily: "Chalkboard SE" };
@@ -40,38 +41,38 @@ const HomeTabs = ({
   user: string;
   setUser: (user: string | null) => void;
 }) => (
-    <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
-      <Tab.Screen
-        name="Search"
-        children={() => <Search />}
-        options={{
-          tabBarIcon: ({ color }) => <SearchIcon color={color} height={40} />,
-        }}
-      />
+  <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+    <Tab.Screen
+      name="Search"
+      children={() => <Search />}
+      options={{
+        tabBarIcon: ({ color }) => <SearchIcon color={color} height={40} />,
+      }}
+    />
 
-      <Tab.Screen
-        name="Network"
-        children={() => <DummyScreen title="Network" />}
-        options={{
-          tabBarIcon: ({ color }) => <NetworkIcon color={color} height={40} />,
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        children={() => <Profile />}
-        options={{
-          tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40} />,
-        }}
-      />
-      <Tab.Screen
-        name="Logout"
-        children={() => <LogOut setUser={setUser} />}
-        options={{
-          tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40} />,
-        }}
+    <Tab.Screen
+      name="Network"
+      children={() => <Network />}
+      options={{
+        tabBarIcon: ({ color }) => <NetworkIcon color={color} height={40} />,
+      }}
+    />
+    <Tab.Screen
+      name="Profile"
+      children={() => <Profile />}
+      options={{
+        tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40} />,
+      }}
+    />
+    <Tab.Screen
+      name="Logout"
+      children={() => <LogOut setUser={setUser} />}
+      options={{
+        tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40} />,
+      }}
 
-      />
-    </Tab.Navigator>
+    />
+  </Tab.Navigator>
 );
 
 const App = () => {

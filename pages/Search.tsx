@@ -3,12 +3,15 @@ import { View, Text, Image, Alert } from "react-native";
 import Logo from "../assets/logo.svg";
 import CustomTextInput from "../components/TextInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Contacts from "expo-contacts";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 
 const Search = () => {
   const [prompt, setPrompt] = useState("");
   const [user, setUser] = useState("");
 
-    useEffect(() => {
+  useEffect(() => {
     const getUserId = async () => {
       const value = await AsyncStorage.getItem("user");
       if (value !== null) {
@@ -16,7 +19,7 @@ const Search = () => {
       }
     }
     getUserId();
-   
+
   }, [])
 
   const handleTextSubmit = async () => {
@@ -44,13 +47,24 @@ const Search = () => {
 
       const data = await response.json();
       if (response.ok) {
-        Alert.alert("Success", "Your request has been submitted!");
-        setPrompt(""); 
+        console.log(data)
+        setPrompt("");
+        if (data && data?.length > 0) {
+          const first_user = data[0]?.matched_user
+          let matching_skill = null
+          first_user.skills.forEach((skill: string) => {
+            if (data[0]?.matched_skills.some((match: string) => {
+              return match == skill
+            }))
+              matching_skill = skill
+          })
+          Alert.alert("Success", `Found ${first_user.name} who is a ${matching_skill}`);
+        }
       } else {
         Alert.alert("Error", data.message || "Something went wrong.");
       }
     } catch (error) {
-        console.log("error", error)
+      console.log("error", error)
       Alert.alert("Error", "Failed to submit request. Please try again.");
     }
   };

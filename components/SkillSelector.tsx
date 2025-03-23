@@ -12,12 +12,12 @@ import {
 } from 'react-native';
 import skillsData from '../lib/skills';
 
-interface Props {
+interface SkillSelectorProps {
     selectedSkills: string[];
     setSelectedSkills: (skills: string[]) => void;
 }
 
-const SkillSelector = ({ selectedSkills, setSelectedSkills }: Props) => {
+const SkillSelector = ({ selectedSkills, setSelectedSkills }: SkillSelectorProps) => {
     const [query, setQuery] = useState('');
     const [filtered, setFiltered] = useState<string[]>([]);
     const [skills, setSkills] = useState<string[]>([]);

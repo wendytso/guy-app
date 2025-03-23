@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import Button from '../components/Button';
 import SkillSelector from '../components/SkillSelector';
 import BackButton from '../components/BackButton';
+import CustomText from '../components/Text';
 
 
 const styles = StyleSheet.create({
@@ -55,8 +56,8 @@ const SignUpStep2 = ({ route, navigation }: any) => {
 
     return (
         <View style={styles.center}>
-            <Text style={{ fontSize: 24 }}>hi {firstName.toLowerCase()}!</Text>
-            <Text style={{ marginVertical: 15 }}>what kind of guy are you?</Text>
+            <CustomText style={{ fontSize: 24, }}>hi {firstName.toLowerCase()}!</CustomText>
+            <CustomText style={{ marginVertical: 15 }}>what kind of guy are you?</CustomText>
             <SkillSelector selectedSkills={selectedSkills} setSelectedSkills={setSelectedSkills} />
             <View style={{ padding: 20 }}></View>
             <Button title="see your network of guys" onPress={handleComplete} />
