@@ -10,8 +10,10 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PlaceholderProfile from "../assets/placeholder.svg";
 import ProfileCard from "../components/ProfileCard";
+import { useNavigation } from "@react-navigation/native";
 
 const Profile = () => {
+  const navigation = useNavigation<any>()
   const [user, setUser] = useState("");
   const [skills, setSkills] = useState<string[]>([]);
   const [location, setLocation] = useState("");
@@ -57,7 +59,7 @@ const Profile = () => {
             }}
           />
 
-          <Pressable style={styles.editButton}>
+          <Pressable style={styles.editButton} onPress={() => navigation.navigate('EditProfile', {})}>
             <Text style={styles.editButtonText}>edit profile</Text>
           </Pressable>
         </View>
@@ -84,7 +86,7 @@ const Profile = () => {
           ))}
         </View>
       </View>
-    </ScrollView>
+    </ScrollView >
   );
 };
 

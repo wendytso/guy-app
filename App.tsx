@@ -19,7 +19,8 @@ import Profile from "./pages/Profile";
 import SignUpStep1 from "./pages/SignUpStep1";
 import SignUpStep2 from "./pages/SignUpStep2";
 import Network from "./pages/Network";
-import MatchResult from "./pages/MatchResult";
+import MatchResult from './pages/MatchResult';
+import EditProfile from "./pages/EditProfile";
 
 (Text as any).defaultProps = (Text as any).defaultProps || {};
 (Text as any).defaultProps.style = { fontFamily: "Chalkboard SE" };
@@ -29,6 +30,7 @@ import MatchResult from "./pages/MatchResult";
 
 const Stack = createNativeStackNavigator();
 const SearchStack = createNativeStackNavigator();
+const ProfileStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const DummyScreen = ({ title }: { title: string }) => (
@@ -76,7 +78,10 @@ const HomeTabs = ({
     />
     <Tab.Screen
       name="Profile"
-      children={() => <Profile />}
+      children={() => <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
+        <ProfileStack.Screen name="HomeProfile" component={Profile} />
+        <ProfileStack.Screen name="EditProfile" component={EditProfile} />
+      </ProfileStack.Navigator>}
       options={{
         tabBarIcon: ({ focused }) => (
           <ProfileIcon fill={focused ? "gray" : "transparent"} height={40} />

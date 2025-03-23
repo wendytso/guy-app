@@ -43,7 +43,7 @@ const MatchResult = ({ route, navigation }: any) => {
             {/* Scrollable Profile Section */}
 
 
-            <View style={{ "width": "100%" }}>
+            <View style={{ "width": "100%", alignItems: "center" }}>
                 <View style={styles.profile_container}>
                     <Image
                         style={styles.photo}
