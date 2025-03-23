@@ -50,7 +50,6 @@ const Search = () => {
         Alert.alert("Error", data.message || "Something went wrong.");
       }
     } catch (error) {
-        console.log("error", error)
       Alert.alert("Error", "Failed to submit request. Please try again.");
     }
   };
