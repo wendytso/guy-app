@@ -14,7 +14,7 @@ const LogOut = ({ setUser }: { setUser: (user: string | null) => void }) => {
             setUser(null);
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'Login' }],
+                routes: [{ name: 'Welcome' }],
             });
         };
         logOutUser();

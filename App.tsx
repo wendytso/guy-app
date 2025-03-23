@@ -14,7 +14,8 @@ import SearchIcon from "./assets/search.svg";
 import NetworkIcon from "./assets/network.svg";
 import ProfileIcon from "./assets/profile.svg";
 import Search from "./pages/Search";
-import SignUp from './pages/SignUp';
+import SignUpStep1 from "./pages/SignUpStep1";
+import SignUpStep2 from "./pages/SignUpStep2";
 
 (Text as any).defaultProps = (Text as any).defaultProps || {};
 (Text as any).defaultProps.style = { fontFamily: "Chalkboard SE" };
@@ -61,6 +62,10 @@ const HomeTabs = ({
         tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40} />,
       }}
     />
+    <Tab.Screen
+      name="Log Out"
+      children={() => <LogOut setUser={setUser}></LogOut>}
+    />
   </Tab.Navigator>
 );
 
@@ -92,9 +97,8 @@ const App = () => {
             <Stack.Screen name="Login">
               {() => <LogIn onLogin={checkLogin} />}
             </Stack.Screen>
-            <Stack.Screen name="SignUp">
-              {() => <SignUp onLogin={checkLogin} />}
-            </Stack.Screen>
+            <Stack.Screen name="SignUpStep1" component={SignUpStep1} />
+            <Stack.Screen name="SignUpStep2" component={SignUpStep2} />
           </Stack.Navigator>
         )}
       </NavigationContainer>

@@ -21,13 +21,14 @@ const Button: React.FC<ButtonProps> = ({ title, onPress, disabled }) => {
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#eee',
+        backgroundColor: '#ececec',
         paddingVertical: 12,
         paddingHorizontal: 30,
         borderRadius: 999,
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
+        width: 300
     },
     text: {
         fontFamily: 'Chalkboard SE',
