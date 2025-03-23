@@ -14,6 +14,7 @@ import SearchIcon from "./assets/search.svg";
 import NetworkIcon from "./assets/network.svg";
 import ProfileIcon from "./assets/profile.svg";
 import Search from "./pages/Search";
+import Profile from "./pages/Profile";
 import SignUpStep1 from "./pages/SignUpStep1";
 import SignUpStep2 from "./pages/SignUpStep2";
 
@@ -39,36 +40,39 @@ const HomeTabs = ({
   user: string;
   setUser: (user: string | null) => void;
 }) => (
-  <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
-    <Tab.Screen
-      name="Search"
-      children={() => <Search />}
-      options={{
-        tabBarIcon: ({ color }) => <SearchIcon color={color} height={40} />,
-      }}
-    />
+    <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+      <Tab.Screen
+        name="Search"
+        children={() => <Search />}
+        options={{
+          tabBarIcon: ({ color }) => <SearchIcon color={color} height={40} />,
+        }}
+      />
 
-    <Tab.Screen
-      name="Network"
-      children={() => <DummyScreen title="Network" />}
-      options={{
-        tabBarIcon: ({ color }) => <NetworkIcon color={color} height={40} />,
-      }}
-    />
-    <Tab.Screen
-      name="Profile"
-      children={() => <DummyScreen title="Profile" />}
-      options={{
-        tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40} />,
-      }}
-    />
-    <Tab.Screen
-      name="Log Out"
-      children={() => <LogOut setUser={setUser}></LogOut>}
-    />
-  </Tab.Navigator>
+      <Tab.Screen
+        name="Network"
+        children={() => <DummyScreen title="Network" />}
+        options={{
+          tabBarIcon: ({ color }) => <NetworkIcon color={color} height={40} />,
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        children={() => <Profile />}
+        options={{
+          tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40} />,
+        }}
+      />
+      <Tab.Screen
+        name="Logout"
+        children={() => <LogOut setUser={setUser} />}
+        options={{
+          tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40} />,
+        }}
+
+      />
+    </Tab.Navigator>
 );
-
 
 const App = () => {
   const [user, setUser] = useState<string | null>(null);

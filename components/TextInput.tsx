@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         borderRadius: 999,
         paddingVertical: 14,
         paddingHorizontal: 20,
-        fontSize: 22,
+        fontSize: 18,
         textAlign: 'center',
         fontFamily: 'Chalkboard SE',
         color: '#555',
