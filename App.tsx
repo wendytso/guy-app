@@ -19,7 +19,7 @@ import Profile from "./pages/Profile";
 import SignUpStep1 from "./pages/SignUpStep1";
 import SignUpStep2 from "./pages/SignUpStep2";
 import Network from "./pages/Network";
-import MatchResult from './pages/MatchResult';
+import MatchResult from "./pages/MatchResult";
 
 (Text as any).defaultProps = (Text as any).defaultProps || {};
 (Text as any).defaultProps.style = { fontFamily: "Chalkboard SE" };
@@ -44,15 +44,24 @@ const HomeTabs = ({
   user: string;
   setUser: (user: string | null) => void;
 }) => (
-  <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+  <Tab.Navigator
+    screenOptions={{
+      tabBarShowLabel: false,
+      tabBarStyle: { backgroundColor: "white", height: 100 }, // Customize the tab bar
+    }}
+  >
     <Tab.Screen
       name="Search"
-      children={() => <SearchStack.Navigator screenOptions={{ headerShown: false }}>
-        <SearchStack.Screen name="Home" component={Search} />
-        <SearchStack.Screen name="MatchResult" component={MatchResult} />
-      </SearchStack.Navigator>}
+      children={() => (
+        <SearchStack.Navigator screenOptions={{ headerShown: false }}>
+          <SearchStack.Screen name="Home" component={Search} />
+          <SearchStack.Screen name="MatchResult" component={MatchResult} />
+        </SearchStack.Navigator>
+      )}
       options={{
-        tabBarIcon: ({ color }) => <SearchIcon color={color} height={40} />,
+        tabBarIcon: ({ focused }) => (
+          <SearchIcon fill={focused ? "gray" : "transparent"} height={40} />
+        ),
       }}
     />
 
@@ -60,21 +69,27 @@ const HomeTabs = ({
       name="Network"
       children={() => <Network />}
       options={{
-        tabBarIcon: ({ color }) => <NetworkIcon color={color} height={40} />,
+        tabBarIcon: ({ focused }) => (
+          <NetworkIcon fill={focused ? "gray" : "transparent"} height={40} />
+        ),
       }}
     />
     <Tab.Screen
       name="Profile"
       children={() => <Profile />}
       options={{
-        tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40} />,
+        tabBarIcon: ({ focused }) => (
+          <ProfileIcon fill={focused ? "gray" : "transparent"} height={40} />
+        ),
       }}
     />
     <Tab.Screen
       name="Logout"
       children={() => <LogOut setUser={setUser} />}
       options={{
-        tabBarIcon: ({ color }) => <LogoutIcon color={color} height={40} />,
+        tabBarIcon: ({ focused }) => (
+          <LogoutIcon fill={focused ? "gray" : "transparent"} height={40} />
+        ),
       }}
     />
   </Tab.Navigator>
@@ -133,6 +148,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  navIcons: {
+    height: 40,
   },
 });
 
