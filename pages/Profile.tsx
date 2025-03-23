@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import PlaceholderProfile from "../assets/placeholder.svg";
+import Divider from "../assets/divider.svg";
 
 const Search = () => {
-  const [user, setUser] = useState<string | null>(null);
-  const [profile, setProfile] = useState<any>(null);
+  const [user, setUser] = useState("");
+  const [skills, setSkills] = useState([]);
+  const [location, setLocation] = useState("");
+  const [name, setName] = useState("");
 
   useEffect(() => {
     const getUserProfile = async () => {
@@ -24,126 +29,77 @@ const Search = () => {
     getUserProfile();
   }, []);
 
-  if (!profile) {
-    return (
-      <View style={styles.center}>
-        <Text>Loading profile...</Text>
-      </View>
-    );
-  }
+  useEffect(() => {
+    const fetchSkills = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.EXPO_PUBLIC_API_URL}/users/${user}`
+        );
+        const data = await response.json();
+        setName(data.user_data.name);
+        setSkills(data.user_data.skills);
+      } catch (error) {
+      }
+    };
+    fetchSkills();
+  }, [user]);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.card}>
-        <View style={styles.image} />
-
-        <View style={styles.content}>
-          <Text style={styles.name}>{profile.name}</Text>
-          <Text style={styles.subtext}>
-            lives in {profile.location?.toLowerCase() || "somewhere"}
-          </Text>
-          <Text style={styles.subtext}>20 km away</Text>
-
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>availability</Text>
-            <Text style={styles.sectionText}>
-              i work 9–5, but i’m usually free afterwards!
+    <View style={styles.view}>
+      <PlaceholderProfile style={{ display: "flex" }} />
+      <View style={styles.text}>
+        <Text style={{ fontSize: 32, fontFamily: "Chalkboard SE" }}>
+          {name}
+        </Text>
+        <Text>lives in location</Text>
+        <Text>X kms away</Text>
+        <Divider style={styles.divider} />
+        <Text>call {user}</Text>
+        <Divider style={styles.divider} />
+        <Text>i'm your guy for:</Text>
+        {skills.map((item, index) => (
+          <View style={styles.bubble} key={index}>
+            <Text key={index} style={styles.bubbleText}>
+              {item}
             </Text>
           </View>
-
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>skills/hobbies</Text>
-            <View style={styles.tagsContainer}>
-              {profile.skills?.map((skill: string, idx: number) => (
-                <View key={idx} style={styles.tag}>
-                  <Text style={styles.tagText}>{skill}</Text>
-                </View>
-              ))}
-            </View>
-          </View>
-        </View>
+        ))}
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 24,
+  view: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
-  card: {
-    backgroundColor: "white",
-    borderRadius: 20,
-    overflow: "hidden",
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    elevation: 3,
+  text: {
+    alignSelf: "flex-start",
+    marginLeft: 20,
   },
-  image: {
-    height: 300,
-    backgroundColor: "#EA625C",
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-  },
-  content: {
-    padding: 20,
-  },
-  name: {
-    fontSize: 24,
-    fontFamily: "Chalkboard SE",
-    fontWeight: "bold",
-    marginBottom: 6,
-    textTransform: "lowercase",
-  },
-  subtext: {
-    fontSize: 14,
-    marginBottom: 2,
-    fontFamily: "Chalkboard SE",
-    color: "#333",
-  },
-  section: {
-    marginTop: 24,
-    borderTopWidth: 1,
-    borderTopColor: "#eaeaea",
-    paddingTop: 16,
-  },
-  sectionTitle: {
-    fontFamily: "Chalkboard SE",
-    fontWeight: "bold",
-    fontSize: 16,
-    marginBottom: 6,
-    textTransform: "lowercase",
-  },
-  sectionText: {
-    fontFamily: "Chalkboard SE",
-    fontSize: 14,
-    color: "#333",
-  },
-  tagsContainer: {
+  divider: { height: 20, marginTop: 20, marginBottom: 20 },
+  bubbleContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 10,
+    justifyContent: "center",
     marginTop: 10,
   },
-  tag: {
+  bubble: {
+    alignSelf: "flex-start",
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    backgroundColor: "#fff",
+    borderColor: "#aaa",
     borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 999,
-    paddingVertical: 6,
-    paddingHorizontal: 16,
-    backgroundColor: "#fafafa",
-    marginRight: 8,
-    marginBottom: 8,
+    borderRadius: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
-  tagText: {
+  bubbleText: {
     fontFamily: "Chalkboard SE",
     fontSize: 14,
-  },
-  center: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 

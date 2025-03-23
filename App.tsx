@@ -13,6 +13,7 @@ import Welcome from "./pages/Welcome";
 import SearchIcon from "./assets/search.svg";
 import NetworkIcon from "./assets/network.svg";
 import ProfileIcon from "./assets/profile.svg";
+import LogoutIcon from "./assets/logout.svg";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import SignUpStep1 from "./pages/SignUpStep1";
@@ -68,7 +69,7 @@ const HomeTabs = ({
       name="Logout"
       children={() => <LogOut setUser={setUser} />}
       options={{
-        tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40} />,
+        tabBarIcon: ({ color }) => <LogoutIcon color={color} height={40} />,
       }}
 
     />
