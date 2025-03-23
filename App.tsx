@@ -19,6 +19,7 @@ import Profile from "./pages/Profile";
 import SignUpStep1 from "./pages/SignUpStep1";
 import SignUpStep2 from "./pages/SignUpStep2";
 import Network from "./pages/Network";
+import MatchResult from './pages/MatchResult';
 
 (Text as any).defaultProps = (Text as any).defaultProps || {};
 (Text as any).defaultProps.style = { fontFamily: "Chalkboard SE" };
@@ -27,6 +28,7 @@ import Network from "./pages/Network";
 (TextInput as any).defaultProps.style = { fontFamily: "Chalkboard SE" };
 
 const Stack = createNativeStackNavigator();
+const SearchStack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const DummyScreen = ({ title }: { title: string }) => (
@@ -45,7 +47,10 @@ const HomeTabs = ({
   <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
     <Tab.Screen
       name="Search"
-      children={() => <Search />}
+      children={() => <SearchStack.Navigator screenOptions={{ headerShown: false }}>
+        <SearchStack.Screen name="Home" component={Search} />
+        <SearchStack.Screen name="MatchResult" component={MatchResult} />
+      </SearchStack.Navigator>}
       options={{
         tabBarIcon: ({ color }) => <SearchIcon color={color} height={40} />,
       }}
@@ -71,7 +76,6 @@ const HomeTabs = ({
       options={{
         tabBarIcon: ({ color }) => <LogoutIcon color={color} height={40} />,
       }}
-
     />
   </Tab.Navigator>
 );

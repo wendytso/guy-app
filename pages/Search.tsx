@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Image, Alert } from "react-native";
+import { View, Text, Image, Alert, ActivityIndicator } from "react-native";
 import Logo from "../assets/logo.svg";
 import CustomTextInput from "../components/TextInput";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Contacts from "expo-contacts";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Search = () => {
+  const navigation = useNavigation<any>();
   const [prompt, setPrompt] = useState("");
   const [user, setUser] = useState("");
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     const getUserId = async () => {
@@ -33,7 +37,10 @@ const Search = () => {
       return;
     }
 
+    setLoading(true);
+
     try {
+
       const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/match_prompt`, {
         method: "POST",
         headers: {
@@ -58,7 +65,7 @@ const Search = () => {
             }))
               matching_skill = skill
           })
-          Alert.alert("Success", `Found ${first_user.name} who is a ${matching_skill}`);
+          navigation.navigate('MatchResult', { match: data[0], next_matches: data.slice(1) });
         }
       } else {
         Alert.alert("Error", data.message || "Something went wrong.");
@@ -66,19 +73,24 @@ const Search = () => {
     } catch (error) {
       console.log("error", error)
       Alert.alert("Error", "Failed to submit request. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Logo style={{ height: 100 }} />
-      <CustomTextInput
-        placeholder="What do you need help with?"
-        value={prompt}
-        onChangeText={setPrompt}
-        keyboardType="phone-pad"
-        onSubmitEditing={handleTextSubmit}
-      />
+      {loading ? (
+        <ActivityIndicator size="large" color="#000" style={{ marginTop: 30 }} />
+      ) :
+        <CustomTextInput
+          placeholder="What do you need help with?"
+          value={prompt}
+          onChangeText={setPrompt}
+          keyboardType="phone-pad"
+          onSubmitEditing={handleTextSubmit}
+        />}
     </View>
   );
 };
