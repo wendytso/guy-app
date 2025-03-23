@@ -9,7 +9,7 @@ const Search = () => {
     <View>
       <Text>Search</Text>
       <Logo style={{ height: 100 }} />
-      <CustomTextInput placeholder="What do you need help with?" value={prompt} onChangeText={setPrompt} keyboardType="phone-pad" onSubmitEditing={ } />
+      {/* <CustomTextInput placeholder="What do you need help with?" value={prompt} onChangeText={setPrompt} keyboardType="phone-pad" onSubmitEditing={ } /> */}
     </View>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import CustomTextInput from '../components/TextInput';
 import Button from '../components/Button';
+import BackButton from '../components/BackButton';
 
 const styles = StyleSheet.create({
     container: {
@@ -48,6 +49,7 @@ const SignUpStep1 = ({ navigation }: any) => {
             <View style={{ marginTop: 10 }}>
                 <Button title="create an account" onPress={handleNext} disabled={!firstName || !lastName || !phoneNumber || !password || !confirmPassword} />
             </View>
+            <BackButton />
         </View>
     );
 };

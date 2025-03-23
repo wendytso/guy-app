@@ -5,6 +5,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomTextInput from '../components/TextInput';
 import Button from '../components/Button';
+import BackButton from '../components/BackButton';
 
 const styles = StyleSheet.create({
     container: {
@@ -48,10 +49,12 @@ const LogIn = ({ onLogin }: { onLogin: () => void }) => {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={styles.center}>
             <CustomTextInput placeholder="Phone Number" value={phoneNumber} onChangeText={setPhoneNumber} keyboardType="phone-pad" />
             <CustomTextInput placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
+            <View style={{ padding: 15 }}></View>
             <Button title={loading ? 'Logging in...' : 'Login'} onPress={handleLogin} disabled={loading} />
+            <BackButton />
         </View>
     );
 };
