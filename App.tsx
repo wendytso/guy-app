@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -14,6 +14,7 @@ import SearchIcon from "./assets/search.svg";
 import NetworkIcon from "./assets/network.svg";
 import ProfileIcon from "./assets/profile.svg";
 import Search from "./pages/Search";
+import SignUp from './pages/SignUp';
 
 (Text as any).defaultProps = (Text as any).defaultProps || {};
 (Text as any).defaultProps.style = { fontFamily: "Chalkboard SE" };
@@ -42,7 +43,7 @@ const HomeTabs = ({
       name="Search"
       children={() => <Search />}
       options={{
-        tabBarIcon: ({ color }) => <SearchIcon color={color} height={40}/>,
+        tabBarIcon: ({ color }) => <SearchIcon color={color} height={40} />,
       }}
     />
 
@@ -50,83 +51,19 @@ const HomeTabs = ({
       name="Network"
       children={() => <DummyScreen title="Network" />}
       options={{
-        tabBarIcon: ({ color }) => <NetworkIcon color={color} height={40}/>,
+        tabBarIcon: ({ color }) => <NetworkIcon color={color} height={40} />,
       }}
     />
     <Tab.Screen
       name="Profile"
       children={() => <DummyScreen title="Profile" />}
       options={{
-        tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40}/>,
+        tabBarIcon: ({ color }) => <ProfileIcon color={color} height={40} />,
       }}
     />
   </Tab.Navigator>
 );
 
-const SignUpScreen = ({ onLogin }: { onLogin: () => void }) => {
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSignUp = async () => {
-    try {
-      const response = await fetch(
-        "https://2890-128-189-236-142.ngrok-free.app/users",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            phone_number: phoneNumber,
-            name,
-            password,
-            skills: [],
-            connections: [],
-            location: "",
-            photo: "",
-          }),
-        }
-      );
-
-      if (response.ok) {
-        await AsyncStorage.setItem("user", phoneNumber);
-        onLogin();
-      } else {
-        const err = await response.text();
-        console.error(err);
-        alert("Sign up failed");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Network error during sign up");
-    }
-  };
-
-  return (
-    <View style={styles.container}>
-      <TextInput
-        placeholder="Name"
-        value={name}
-        onChangeText={setName}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Phone Number"
-        value={phoneNumber}
-        onChangeText={setPhoneNumber}
-        style={styles.input}
-        keyboardType="phone-pad"
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        style={styles.input}
-      />
-      <Button title="Create Account" onPress={handleSignUp} />
-    </View>
-  );
-};
 
 const App = () => {
   const [user, setUser] = useState<string | null>(null);
@@ -156,7 +93,7 @@ const App = () => {
               {() => <LogIn onLogin={checkLogin} />}
             </Stack.Screen>
             <Stack.Screen name="SignUp">
-              {() => <SignUpScreen onLogin={checkLogin} />}
+              {() => <SignUp onLogin={checkLogin} />}
             </Stack.Screen>
           </Stack.Navigator>
         )}
