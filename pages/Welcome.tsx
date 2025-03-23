@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    View, Text, StyleSheet
+    View, Text, StyleSheet, Image
 } from 'react-native';
 import Button from '../components/Button';
 const styles = StyleSheet.create({
@@ -14,10 +14,12 @@ const styles = StyleSheet.create({
         flex: 1, justifyContent: 'center', alignItems: 'center',
     },
 });
+import Logo from "../assets/logo.svg";
 
 
 const Welcome = ({ navigation }: { navigation: any }) => (
     <View style={styles.center}>
+        <Logo style={{ height: 100 }}/>
         <Text style={{ fontSize: 24, marginBottom: 20, fontFamily: 'Chalkboard SE' }}>the guy app</Text>
         <Button title="Login" onPress={() => navigation.navigate('Login')} />
         <View style={{ height: 10 }} />
